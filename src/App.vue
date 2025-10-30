@@ -1,34 +1,63 @@
 <script setup>
+import { onMounted, onUpdated } from 'vue'
 
-import { onMounted } from 'vue';
 
 onMounted(() => {
-  console.log('App mounted');
-});
-
-onUpdated(() => {
-  console.log('App updated');
+  console.log('App Mounted')
 })
 
-const message = "Hello from vue 3";
+onUpdated(() => {
+  console.log('App updated')
+})
 
-const clickHandler =() => {
-  const message = 'Button Clicked'
-  
+import { ref } from 'vue'
+const message = ref("Hello from vue")
+const link = ref("https://emanuel.ro")
 
+const ClickHandler = () => {
+  message.value = "Button clicked"
 }
 
+const randomNumber = ref(null)
+const updateRandomNumber = () => {
+  randomNumber.value = Math.random()
+}
+
+const counter = ref(0)
+const incrementCounter = () => {
+  counter.value++
+}
 </script>
 
 <template>
   <h1>You did it!</h1>
-  <button>@click"console.log('Button Clicked')">Click Me</button>
+  <button @click="ClickHandler">Click me</button>
   <p>
-    {{  message }}
+    {{ message }}
   </p>
-  <br />
-  <input type = text @change="console.log('Text Changed')" 
-  @input ="console.log('You have typed:' + $event.target.value)"></input>
+  <br>
+  <input type="text" @change="console.log('text changed')"
+    @input="console.log('you have typed: ' + $event.target.value)" @keydown="console.log('you pressed: ' + $event.key)">
+  </input>
+  <br>
+  <a :href="link" target="_blank">Visit emanuel Website</a>
+  <br></br>
+  <hr>
+  <br></br>
+  <h3>Display a random number</h3>
+  <button @click="updateRandomNumber">Get a random number {{ randomNumber }}</button>
+  <div v-if="randomNumber">
+    <div v-if="randomNumber >= 0.5">number is bigger than 0.5</div>
+    <div v-else>number is lower than 0.5</div>
+  </div>
+
+  <br></br>
+  <hr>
+  <h3>Counter</h3>
+  <button @click="counter++">Increment v1</button>
+  <button @click="counter++">Increment v2</button>
+
+  <div>{{ counter }}</div>
 </template>
 
 <style scoped></style>
