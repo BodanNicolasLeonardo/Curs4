@@ -1,7 +1,6 @@
 <script setup>
 import { onMounted, onUpdated } from 'vue'
 
-
 onMounted(() => {
   console.log('App Mounted')
 })
@@ -11,12 +10,8 @@ onUpdated(() => {
 })
 
 import { ref } from 'vue'
-const message = ref("Hello from vue")
+import YouDidIt from './components/YouDidIt.vue'
 const link = ref("https://emanuel.ro")
-
-const ClickHandler = () => {
-  message.value = "Button clicked"
-}
 
 const randomNumber = ref(null)
 const updateRandomNumber = () => {
@@ -27,18 +22,20 @@ const counter = ref(0)
 const incrementCounter = () => {
   counter.value++
 }
+
+const students = ref([
+  {name: "Miriam", grade:10},
+  {name: "Leo", grade:7},
+  {name: "Ana", grade:6},
+  {name: "Emanuel", grade:8}
+  ])
 </script>
 
+
 <template>
-  <h1>You did it!</h1>
-  <button @click="ClickHandler">Click me</button>
-  <p>
-    {{ message }}
-  </p>
-  <br>
-  <input type="text" @change="console.log('text changed')"
-    @input="console.log('you have typed: ' + $event.target.value)" @keydown="console.log('you pressed: ' + $event.key)">
-  </input>
+  <YouDidIt>
+
+  </YouDidIt>
   <br>
   <a :href="link" target="_blank">Visit emanuel Website</a>
   <br></br>
@@ -58,6 +55,19 @@ const incrementCounter = () => {
   <button @click="counter++">Increment v2</button>
 
   <div>{{ counter }}</div>
+  <hr>
+ 
+   <h3> Bootstrap Icons <i class="bi bi-airplane"></i></h3>
+  <hr>
+  <h3>Test v-for</h3>
+  <ul>
+    <li v-for ="(student, index) of students" :key="index">
+      Name: {{student.name}}, Grade: {{ student.grade }}
+    </li>
+  </ul>
 </template>
 
-<style scoped></style>
+<style scoped>
+@import "bootstrap-icons";
+/*@import "tailwindcss";*/
+</style>
